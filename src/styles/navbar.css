@@ -1,0 +1,21 @@
+.dropdown-hover:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-hover > .dropdown-toggle:active {
+  pointer-events: none;
+}
+
+.dropdown-menu {
+  border: none;
+  border-radius: 0;
+}
+
+@media all and (min-width: 992px) {
+  .dropdown-menu-static {
+    position: static !important;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+}
