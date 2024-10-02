@@ -6,16 +6,15 @@
   margin-left: 10px;
 }
 
-/* .img-card{
-    width: 40%;
-} */
+.img-card {
+  width: 50%;
+}
 
 .img-card img {
-  width: 100%;
+  width: 90%;
   flex-shrink: 0;
   border-radius: 4px;
-  height: 50vh;
-  object-fit: cover;
+  height: 60vh;
 }
 
 .small-Card {
@@ -56,7 +55,6 @@
   font-family: Lato;
   font-weight: 500;
   line-height: 130%;
-  color: #ff4242;
   margin: 6px 0;
 }
 
@@ -76,10 +74,12 @@
 }
 
 .size-option {
-  width: 200px;
+  text-align: center;
+  width: 100px;
   height: 30px;
   margin-bottom: 15px;
   padding: 5px;
+  border-radius: 5px;
 }
 
 .quantity input {
@@ -148,4 +148,94 @@ hr {
   hr {
     width: 100%;
   }
+}
+
+.color-picker {
+  display: flex;
+  gap: 10px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  transition: transform 0.2s ease-in-out;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.selected {
+  border-color: #333;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #333;
+}
+
+.color-option {
+  background-color: #ff00ff;
+}
+
+.color-green {
+  background-color: green;
+}
+
+.color-red {
+  background-color: red;
+}
+
+.color-white {
+  background-color: white;
+}
+.color-blue {
+  background-color: blue;
+}
+:root {
+  --background-gradient: linear-gradient(178deg, #ffff33 10%, #3333ff);
+  --gray: #34495e;
+  --darkgray: #2c3e50;
+}
+
+select {
+  /* Reset Select */
+  appearance: none;
+  outline: 10px red;
+  border: 0;
+  box-shadow: none;
+  /* Personalize */
+  flex: 1;
+  padding: 0 1em;
+  color: #fff;
+  background-color: var(--darkgray);
+  background-image: none;
+  cursor: pointer;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select wrapper */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  border-radius: 0.25em;
+  overflow: hidden;
+}
+/* Arrow */
+.select::after {
+  content: "\25BC";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1em;
+  background-color: #34495e;
+  transition: 0.25s all ease;
+  pointer-events: none;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
 }

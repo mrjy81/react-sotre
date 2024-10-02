@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { BASE_URL } from "../../constants/general";
 import call_api from "../../helper/interact_api";
 import { useEffect } from "react";
-export default function Navbar({ cartCount }) {
+export default function Navbar({ cartCount, setIsLogged, isLogged }) {
   const url = BASE_URL + "api/category/";
   const [categories, setCategories] = useState();
   const [sortedCategories, setSortedCategories] = useState({});
@@ -21,18 +21,65 @@ export default function Navbar({ cartCount }) {
   useEffect(() => {
     const getCategories = async () => {
       const { data, status } = await call_api(url);
+      if (status === 404) {
+        console.log("not found");
+        return;
+      }
       if (status === 200) {
         setCategories(data);
         let category = {};
         for (let i = 0; i < data.length; i++) {
           if (data[i].parent == null) category[data[i].id] = [];
-          else category[data[i].parent].push(data[i]);
+          else category[data[i].parent]?.push(data[i]);
         }
         setSortedCategories(category);
       }
     };
     getCategories();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (!refreshToken || !accessToken) {
+        console.warn("No tokens found. User might already be logged out.");
+        return;
+      }
+
+      const { data, error, status } = await call_api(`${BASE_URL}logout/`, {
+        method: "POST",
+        data: { refresh_token: refreshToken },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (error || status !== 205) {
+        console.log(`Logout failed with status ${status}: ${error}`);
+      }
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+    } finally {
+      // Always remove tokens, even if the API call fails
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      setIsLogged(false);
+    }
+  };
+
+  let loggin_btn = (
+    <Link className="nav-link" to="/login">
+      ورود
+    </Link>
+  );
+
+  let loggout_btn = (
+    <a className="nav-link" onClick={handleLogout}>
+      خروج
+    </a>
+  );
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -67,6 +114,9 @@ export default function Navbar({ cartCount }) {
               >
                 <div className="container">
                   <div className="row my-4">
+                    <Link className="nav-link" to="/products">
+                      همه
+                    </Link>
                     {Object.entries(sortedCategories).map(([key, value]) => (
                       <div key={key} className="col-md-6 col-lg-3 mb-3 mb-lg-0">
                         <Link
@@ -94,6 +144,12 @@ export default function Navbar({ cartCount }) {
                   </div>
                 </div>
               </div>
+            </li>
+            <li className="nav-item">{isLogged ? loggout_btn : loggin_btn}</li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                خانه
+              </Link>
             </li>
           </ul>
         </div>

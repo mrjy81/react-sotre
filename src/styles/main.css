@@ -6,9 +6,26 @@
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover,
 a:visited {
   color: inherit;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+a,
+u {
+  text-decoration: none;
 }

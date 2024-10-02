@@ -1,4 +1,4 @@
-export const formatMoney = (money) => {
+export const formatMoney = (money = 0) => {
   // Convert the input to a string and split it into integer and decimal parts
   const [integerPart, decimalPart] = money.toString().split(".");
 

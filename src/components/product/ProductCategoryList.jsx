@@ -8,7 +8,6 @@ export default function ProductCategoryList() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const url = `http://localhost:8000/api/product/category/${cat_slug}/all/`;
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -22,17 +21,14 @@ export default function ProductCategoryList() {
         setError(err.message);
       }
     };
-
     fetchProducts();
   }, [cat_slug]);
-
   if (error) {
     return <div>Error: {error}</div>;
   }
-
   return (
     <div className="product-grid">
-      {products.map((product) => (
+      {products?.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>
